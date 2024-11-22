@@ -1,0 +1,7 @@
+services:
+  cpp-app:
+    container_name : cpp-app
+    image: cpp-example:latest
+    build:
+      context: .
+      dockerfile: dockerfile

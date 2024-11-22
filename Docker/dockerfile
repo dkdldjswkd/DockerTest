@@ -1,0 +1,32 @@
+# 빌드를 위한 베이스 이미지
+FROM ubuntu:latest as builder
+
+# 필요한 패키지 설치
+RUN apt-get update && apt-get install -y \
+    git \
+    cmake \
+    g++ \
+    make \
+    && rm -rf /var/lib/apt/lists/*
+
+# clone 디렉터리 설정
+WORKDIR /app
+
+# git clone
+RUN git clone https://github.com/dkdldjswkd/DockerTest.git .
+
+# Test 프로젝트로 이동
+WORKDIR /app/DockerTest/Test
+
+# CMake 빌드
+RUN cmake -B build && \
+    cmake --build build
+
+# 실행 스테이지
+FROM ubuntu:latest
+
+# 빌드된 실행 파일 복사
+COPY --from=builder /app/build/example /usr/local/bin/example
+
+# 실행
+CMD ["example"]
