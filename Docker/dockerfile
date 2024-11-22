@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
     cmake \
     g++ \
     make \
+    coreutils \
+    bash \
     && rm -rf /var/lib/apt/lists/*
 
 # clone 디렉터리 설정
@@ -16,7 +18,7 @@ WORKDIR /app
 RUN git clone https://github.com/dkdldjswkd/DockerTest.git .
 
 # Test 프로젝트로 이동
-WORKDIR /app/DockerTest/Test
+WORKDIR /app/Test
 
 # CMake 빌드
 RUN cmake -B build && \
@@ -25,8 +27,17 @@ RUN cmake -B build && \
 # 실행 스테이지
 FROM ubuntu:latest
 
-# 빌드된 실행 파일 복사
-COPY --from=builder /app/build/example /usr/local/bin/example
+# 필요한 패키지 설치
+RUN apt-get update && apt-get install -y \
+    bash \
+    coreutils \
+    && rm -rf /var/lib/apt/lists/*
 
-# 실행
-CMD ["example"]
+# 빌드된 실행 파일 복사
+COPY --from=builder /app/Test/build/Test /app/Test
+
+# 실행 디렉토리로 이동
+WORKDIR /app/Test
+
+# 실행 파일 실행
+CMD  ["./Test"]

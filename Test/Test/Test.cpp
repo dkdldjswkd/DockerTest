@@ -2,11 +2,18 @@
 //
 
 #include "Test.h"
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	while (1)
+	{
+		cout << "hello" << endl;
+		std::this_thread::sleep_for(std::chrono::seconds(1)); // 1초 대기
+	}
+
 	return 0;
 }
