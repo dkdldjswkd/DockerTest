@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # git clone
-RUN git clone https://github.com/dkdldjswkd/DockerTest.git .
+RUN git clone https://github.com/dkdldjswkd/DockerTest.git . && \
+	git pull
 
 # Test 프로젝트로 이동
 WORKDIR /app/Test
@@ -40,4 +41,4 @@ COPY --from=builder /app/Test/build/Test /app/Test
 WORKDIR /app/Test
 
 # 실행 파일 실행
-CMD  ["./Test"]
+ENTRYPOINT ["./Test"]

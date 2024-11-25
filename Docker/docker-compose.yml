@@ -1,10 +1,7 @@
 services:
   cpp-app:
     container_name : cpp-app
-    image: cpp-app:latest
+    image: cpp-app-image
     build:
       context: .
       dockerfile: dockerfile
-    stdin_open: true  # 인터랙티브 모드 활성화
-    tty: true         # TTY 활성화 (가상 터미널)
-    command: /bin/bash  # 컨테이너 실행 시 /bin/bash 실행
